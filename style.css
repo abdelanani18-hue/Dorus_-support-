@@ -1,0 +1,92 @@
+/* ===== RESET ===== */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f0f4f8;color:#1a1a2e}
+
+/* ===== NAV ===== */
+nav{background:#16213e;padding:14px 20px;display:flex;
+  justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.logo{color:#e94560;font-size:1.3rem;font-weight:700}
+.nav-links a{color:#fff;text-decoration:none;margin-right:12px;font-size:.9rem}
+.nav-links a.btn-nav{background:#e94560;padding:7px 16px;border-radius:20px}
+.btn-logout{background:transparent;border:1px solid #e94560;color:#e94560;
+  padding:7px 14px;border-radius:20px;cursor:pointer}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(135deg,#16213e,#0f3460);color:#fff;
+  text-align:center;padding:70px 20px 80px}
+.hero h1{font-size:2rem;margin-bottom:14px;line-height:1.4}
+.hero h1 span{color:#e94560}
+.hero p{opacity:.85;margin-bottom:28px}
+.search-bar{display:flex;max-width:500px;margin:0 auto;
+  border-radius:30px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.search-bar input{flex:1;padding:14px 20px;border:none;font-size:1rem;outline:none}
+.search-bar button{background:#e94560;color:#fff;border:none;
+  padding:0 22px;font-size:1rem;cursor:pointer}
+
+/* ===== STATS ===== */
+.stats{display:flex;justify-content:center;gap:30px;padding:28px 20px;
+  background:#fff;flex-wrap:wrap}
+.stat{text-align:center}
+.num{font-size:2rem;font-weight:700;color:#e94560}
+.lbl{font-size:.8rem;color:#666}
+
+/* ===== CARDS ===== */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:18px;max-width:1000px;margin:24px auto;padding:0 16px}
+.card{background:#fff;border-radius:14px;padding:20px;
+  box-shadow:0 2px 12px rgba(0,0,0,.08);transition:transform .2s}
+.card:hover{transform:translateY(-4px)}
+.avatar{width:52px;height:52px;border-radius:50%;background:#e94560;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;font-weight:700;margin-bottom:10px}
+.card h3{font-size:.95rem;margin-bottom:4px}
+.card .subject{color:#0f3460;font-size:.82rem;margin-bottom:6px}
+.card .stars{color:#f5a623;font-size:.9rem}
+.card .price{font-weight:700;color:#e94560;margin-top:8px}
+.btn-book{display:block;margin-top:12px;background:#16213e;color:#fff;
+  text-align:center;padding:10px;border-radius:10px;
+  border:none;width:100%;cursor:pointer;font-size:.9rem}
+
+/* ===== AUTH ===== */
+.auth-page{background:#16213e;min-height:100vh;
+  display:flex;align-items:center;justify-content:center}
+.auth-box{background:#fff;border-radius:16px;padding:32px;
+  width:100%;max-width:380px;display:flex;flex-direction:column;gap:14px}
+.auth-box h2{text-align:center;color:#16213e;margin-bottom:6px}
+.auth-box input,.auth-box select{
+  padding:12px 16px;border:1px solid #ddd;border-radius:10px;
+  font-size:.95rem;outline:none;width:100%}
+.auth-box button{background:#e94560;color:#fff;border:none;
+  padding:13px;border-radius:10px;font-size:1rem;cursor:pointer}
+.auth-box a{color:#e94560;text-decoration:none;text-align:center;font-size:.85rem}
+.err-msg{color:#e94560;font-size:.82rem;text-align:center}
+
+/* ===== SEARCH PAGE ===== */
+.search-page{max-width:1000px;margin:0 auto;padding:20px 16px}
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;
+  background:#fff;padding:16px;border-radius:14px;
+  box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.filters select,.filters input{
+  flex:1;min-width:130px;padding:10px 14px;
+  border:1px solid #ddd;border-radius:10px;font-size:.9rem;outline:none}
+.filters button{background:#e94560;color:#fff;border:none;
+  padding:10px 22px;border-radius:10px;cursor:pointer;font-size:.9rem}
+
+/* ===== DASHBOARD ===== */
+.dashboard{max-width:900px;margin:0 auto;padding:24px 16px}
+.dashboard h2{margin-bottom:20px;color:#16213e}
+.booking-card{background:#fff;border-radius:10px;padding:14px 18px;
+  margin-bottom:10px;display:flex;justify-content:space-between;
+  align-items:center;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+.status.paid{color:#2ecc71}
+.status.pending_payment{color:#f39c12}
+.status.completed{color:#3498db}
+.status.canceled{color:#e74c3c}
+.bookings-list{max-height:400px;overflow-y:auto}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:480px){
+  .hero h1{font-size:1.5rem}
+  .stats{gap:16px}
+  nav .nav-links a:not(.btn-nav){display:none}
+}

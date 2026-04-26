@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مولّد مشروع دروس+</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',sans-serif;background:#0f0f1a;color:#eee;padding:20px;min-height:100vh}
+  h1{text-align:center;color:#e94560;font-size:1.4rem;margin-bottom:6px}
+  .sub{text-align:center;color:#888;font-size:.85rem;margin-bottom:26px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:420px){.grid{grid-template-columns:1fr}}
+  .card{background:#1a1a2e;border-radius:12px;padding:16px;border:1px solid #2a2a4a}
+  .card .icon{font-size:1.6rem;margin-bottom:8px}
+  .card h3{font-size:.95rem;color:#fff;margin-bottom:4px}
+  .card p{font-size:.75rem;color:#888;margin-bottom:12px}
+  .dl-btn{
+    width:100%;padding:10px;border:none;border-radius:8px;
+    background:#e94560;color:#fff;font-size:.85rem;
+    cursor:pointer;transition:.2s
+  }
+  .dl-btn:hover{background:#c73652}
+  .dl-btn.done{background:#2ecc71}
+  .dl-all{
+    display:block;width:100%;margin-bottom:20px;padding:14px;
+    border:none;border-radius:12px;background:linear-gradient(135deg,#e94560,#c73652);
+    color:#fff;font-size:1rem;font-weight:700;cursor:pointer
+  }
+  .note{margin-top:20px;background:#1a1a2e;border-radius:10px;padding:14px;
+    font-size:.8rem;color:#aaa;border-right:3px solid #e94560;line-height:1.7}
+</style>
+</head>
+<body>
+<h1>📦 مشروع دروس+</h1>
+<p class="sub">اضغط على كل ملف لتنزيله — أو نزّل الكل دفعة واحدة</p>
+
+<button class="dl-all" onclick="downloadAll()">⬇️ تنزيل جميع الملفات (8 ملفات)</button>
+
+<div class="grid" id="grid"></div>
+
+<div class="note">
+  💡 <strong>بعد التنزيل:</strong><br>
+  1. افتح GitHub → New Repository → "drous-support"<br>
+  2. Add file → Upload files → ارفع كل الملفات<br>
+  3. اربط المستودع بـ Vercel وانشر بضغطة واحدة
+</div>
+
+<script>
+const files = [
+  {
+    name:"index.html", icon:"🏠", title:"الصفحة الرئيسية",
+    desc:"Hero + بطاقات الأساتذة + كيف تعمل المنصة",
+    content:`<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>دروس+ | المنصة الجزائرية</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav>
+  <div class="logo">📚 دروس+</div>
+  <div class="nav-links">
+    <a href="search.html">بحث</a>
+    <a href="login.html">دخول</a>
+    <a href="register.html" class="btn-nav">سجّل</a>
+  </div>
+</nav>
+<section class="hero">
+  <h1>جد أستاذك <span>المثالي</span></h1>
+  <p>منصة تربط التلاميذ بأفضل الأساتذة في الجزائر</p>
+  <div class="search-bar">
+    <input type="text" id="hs" placeholder="رياضيات، فيزياء...">
+    <button onclick="location.href='search.html?q='+document.getElementById('hs').value">بحث</button>
+  </div>
+</section>
+<section class="stats">
+  <div class="stat"><div class="num">+320</div><div class="lbl">أستاذ</div></div>
+  <div class="stat"><div class="num">+1200</div><div class="lbl">تلميذ</div></div>
+  <div class="stat"><div class="num">48</div><div class="lbl">ولاية</div></div>
+</section>
+<script type="module" src="js/home.js"><\/script>
+</body>
+</html>`
+  },
+  {
+    name:"login.html", icon:"🔑", title:"تسجيل الدخول",
+    desc:"نموذج البريد + كلمة المرور",
+    content:`<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>دخول | دروس+</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+<div class="auth-box">
+  <h2>🔑 تسجيل الدخول</h2>
+  <input type="email"    id="email" placeholder="البريد الإلكتروني">
+  <input type="password" id="pass"  placeholder="كلمة المرور">
+  <button onclick="handleLogin()">دخول</button>
+  <p><a href="register.html">ليس لديك حساب؟ سجّل الآن</a></p>
+  <div id="err" class="err-msg"></div>
+</div>
+<script type="module">
+  import { login } from './js/auth.js';
+  window.handleLogin = async () => {
+    try {
+      await login(
+        document.getElementById('email').value,
+        document.getElementById('pass').value
+      );
+    } catch(e) {
+      document.getElementById('err').textContent = 'خطأ: ' + e.message;
+    }
+  };
+<\/script>
+</body>
+</html>`
+  },
+  {
+    name:"register.html", icon:"📝", title:"إنشاء حساب",
+    desc:"اختيار الدور (أستاذ/تلميذ) + البيانات الأساسية",
+    content:`<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>تسجيل | دروس+</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+<div class="auth-box">
+  <h2>📝 إنشاء حساب</h2>
+  <input type="text"  id="name"  placeholder="الاسم الكامل">
+  <input type="email" id="email" placeholder="البريد الإلكتروني">
+  <input type="password" id="pass" placeholder="كلمة المرور">
+  <select id="role">
+    <option value="eleve">تلميذ</option>
+    <option value="prof">أستاذ</option>
+  </select>
+  <select id="wilaya">
+    <option>الجزائر</option><option>وهران</option><option>قسنطينة</option>
+    <option>عنابة</option><option>سطيف</option><option>تيزي وزو</option>
+  </select>
+  <button onclick="handleRegister()">إنشاء الحساب</button>
+  <div id="err" class="err-msg"></div>
+</div>
+<script type="module">
+  import { register } from './js/auth.js';
+  window.handleRegister = async () => {
+    try {
+      await register(
+        document.getElementById('email').value,
+        document.getElementById('pass').value,
+        document.getElementById('role').value,
+        { name: document.getElementById('name').value,
+          wilaya: document.getElementById('wilaya').value }
+      );
+    } catch(e) {
+      document.getElementById('err').textContent = 'خطأ: ' + e.message;
+    }
+  };
+<\/script>
+</body>
+</html>`
+  },
+  {
+    name:"search.html", icon:"🔍", title:"البحث والتصفية",
+    desc:"فلاتر المادة + الولاية + السعر + بطاقات النتائج",
+    content:`<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>بحث | دروس+</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav><div class="logo">📚 دروس+</div>
+<div class="nav-links"><a href="index.html">الرئيسية</a></div></nav>
+<div class="search-page">
+  <div class="filters">
+    <select id="fSubject">
+      <option value="">كل المواد</option>
+      <option>رياضيات</option><option>فيزياء</option>
+      <option>كيمياء</option><option>إنجليزية</option><option>عربية</option>
+    </select>
+    <select id="fWilaya">
+      <option value="">كل الولايات</option>
+      <option>الجزائر</option><option>وهران</option><option>قسنطينة</option>
+    </select>
+    <input type="number" id="fPrice" placeholder="أقصى سعر (دج)">
+    <button onclick="doSearch()">بحث</button>
+  </div>
+  <div class="cards" id="results"></div>
+</div>
+<script type="module">
+  import { searchProfessors, renderCards } from './js/search.js';
+  window.doSearch = async () => {
+    const profs = await searchProfessors({
+      subject:  document.getElementById('fSubject').value || null,
+      wilaya:   document.getElementById('fWilaya').value  || null,
+      maxPrice: document.getElementById('fPrice').value   || null
+    });
+    renderCards(profs, 'results');
+  };
+  doSearch();
+<\/script>
+</body>
+</html>`
+  },
+  {
+    name:"dashboard-prof.html", icon:"👨‍🏫", title:"لوحة الأستاذ",
+    desc:"الإحصائيات + قائمة الحجوزات + تعديل الملف الشخصي",
+    content:`<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>لوحة الأستاذ | دروس+</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav>
+  <div class="logo">📚 دروس+</div>
+  <button onclick="handleLogout()" class="btn-logout">خروج</button>
+</nav>
+<div class="dashboard">
+  <h2 id="welcome">مرحباً أستاذ...</h2>
+  <div class="stats">
+    <div class="stat"><div class="num" id="totalEarnings">0</div><div class="lbl">دج مكتسبة</div></div>
+    <div class="stat"><div class="num" id="totalSessions">0</div><div class="lbl">حصص مكتملة</div></div>
+    <div class="stat"><div class="num" id="pendingCount">0</div><div class="lbl">حجوزات قيد الانتظار</div></div>
+  </div>
+  <h3 style="margin:20px 0 10px">الحجوزات الأخيرة</h3>
+  <div id="bookingsList" class="bookings-list"></div>
+</div>
+<script type="module">
+  import { watchAuth, logout } from './js/auth.js';
+  import { getProfBookings }   from './js/bookings.js';
+  window.handleLogout = logout;
+  watchAuth(async (user, data) => {
+    if (!user || data.role !== 'prof') { location.href='login.html'; return; }
+    document.getElementById('welcome').textContent = 'مرحباً ' + data.name;
+    const bookings = await getProfBookings(user.uid);
+    const list = document.getElementById('bookingsList');
+    bookings.forEach(b => {
+      list.innerHTML += \`<div class="booking-card">
+        <span>حجز #\${b.id.slice(0,6)}</span>
+        <span>\${b.profAmount} دج</span>
+        <span class="status \${b.status}">\${b.status}</span>
+      </div>\`;
+    });
+  });
+<\/script>
+</body>
+</html>`
+  },
+  {
+    name:"css/style.css", icon:"🎨", title:"ملف التنسيق الكامل",
+    desc:"كل أنماط الموقع — Responsive لكل الشاشات",
+    content:`/* ===== RESET ===== */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f0f4f8;color:#1a1a2e}
+
+/* ===== NAV ===== */
+nav{background:#16213e;padding:14px 20px;display:flex;
+  justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.logo{color:#e94560;font-size:1.3rem;font-weight:700}
+.nav-links a{color:#fff;text-decoration:none;margin-right:12px;font-size:.9rem}
+.nav-links a.btn-nav{background:#e94560;padding:7px 16px;border-radius:20px}
+.btn-logout{background:transparent;border:1px solid #e94560;color:#e94560;
+  padding:7px 14px;border-radius:20px;cursor:pointer}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(135deg,#16213e,#0f3460);color:#fff;
+  text-align:center;padding:70px 20px 80px}
+.hero h1{font-size:2rem;margin-bottom:14px;line-height:1.4}
+.hero h1 span{color:#e94560}
+.hero p{opacity:.85;margin-bottom:28px}
+.search-bar{display:flex;max-width:500px;margin:0 auto;
+  border-radius:30px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.search-bar input{flex:1;padding:14px 20px;border:none;font-size:1rem;outline:none}
+.search-bar button{background:#e94560;color:#fff;border:none;
+  padding:0 22px;font-size:1rem;cursor:pointer}
+
+/* ===== STATS ===== */
+.stats{display:flex;justify-content:center;gap:30px;padding:28px 20px;
+  background:#fff;flex-wrap:wrap}
+.stat{text-align:center}
+.num{font-size:2rem;font-weight:700;color:#e94560}
+.lbl{font-size:.8rem;color:#666}
+
+/* ===== CARDS ===== */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:18px;max-width:1000px;margin:24px auto;padding:0 16px}
+.card{background:#fff;border-radius:14px;padding:20px;
+  box-shadow:0 2px 12px rgba(0,0,0,.08);transition:transform .2s}
+.card:hover{transform:translateY(-4px)}
+.avatar{width:52px;height:52px;border-radius:50%;background:#e94560;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;font-weight:700;margin-bottom:10px}
+.card h3{font-size:.95rem;margin-bottom:4px}
+.card .subject{color:#0f3460;font-size:.82rem;margin-bottom:6px}
+.card .stars{color:#f5a623;font-size:.9rem}
+.card .price{font-weight:700;color:#e94560;margin-top:8px}
+.btn-book{display:block;margin-top:12px;background:#16213e;color:#fff;
+  text-align:center;padding:10px;border-radius:10px;
+  border:none;width:100%;cursor:pointer;font-size:.9rem}
+
+/* ===== AUTH ===== */
+.auth-page{background:#16213e;min-height:100vh;
+  display:flex;align-items:center;justify-content:center}
+.auth-box{background:#fff;border-radius:16px;padding:32px;
+  width:100%;max-width:380px;display:flex;flex-direction:column;gap:14px}
+.auth-box h2{text-align:center;color:#16213e;margin-bottom:6px}
+.auth-box input,.auth-box select{
+  padding:12px 16px;border:1px solid #ddd;border-radius:10px;
+  font-size:.95rem;outline:none;width:100%}
+.auth-box button{background:#e94560;color:#fff;border:none;
+  padding:13px;border-radius:10px;font-size:1rem;cursor:pointer}
+.auth-box a{color:#e94560;text-decoration:none;text-align:center;font-size:.85rem}
+.err-msg{color:#e94560;font-size:.82rem;text-align:center}
+
+/* ===== SEARCH PAGE ===== */
+.search-page{max-width:1000px;margin:0 auto;padding:20px 16px}
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;
+  background:#fff;padding:16px;border-radius:14px;
+  box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.filters select,.filters input{
+  flex:1;min-width:130px;padding:10px 14px;
+  border:1px solid #ddd;border-radius:10px;font-size:.9rem;outline:none}
+.filters button{background:#e94560;color:#fff;border:none;
+  padding:10px 22px;border-radius:10px;cursor:pointer;font-size:.9rem}
+
+/* ===== DASHBOARD ===== */
+.dashboard{max-width:900px;margin:0 auto;padding:24px 16px}
+.dashboard h2{margin-bottom:20px;color:#16213e}
+.booking-card{background:#fff;border-radius:10px;padding:14px 18px;
+  margin-bottom:10px;display:flex;justify-content:space-between;
+  align-items:center;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+.status.paid{color:#2ecc71}
+.status.pending_payment{color:#f39c12}
+.status.completed{color:#3498db}
+.status.canceled{color:#e74c3c}
+.bookings-list{max-height:400px;overflow-y:auto}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:480px){
+  .hero h1{font-size:1.5rem}
+  .stats{gap:16px}
+  nav .nav-links a:not(.btn-nav){display:none}
+}`
+  },
+  {
+    name:"js/firebase-config.js", icon:"🔥", title:"إعداد Firebase",
+    desc:"استبدل القيم ببيانات مشروعك",
+    content:`import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth }       from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ⚠️ استبدل هذه القيم من Firebase Console → Project Settings
+const firebaseConfig = {
+  apiKey:            "YOUR_API_KEY",
+  authDomain:        "YOUR_PROJECT.firebaseapp.com",
+  projectId:         "YOUR_PROJECT_ID",
+  storageBucket:     "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId:             "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db   = getFirestore(app);`
+  },
+  {
+    name:"js/auth.js", icon:"🛡️", title:"نظام المصادقة",
+    desc:"تسجيل / دخول / خروج / مراقبة الجلسة",
+    content:`import { auth, db } from "./firebase-config.js";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword,
+         signOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { doc, setDoc, getDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+export async function register(email, password, role, extra) {
+  const cred = await createUserWithEmailAndPassword(auth, email, password);
+  const uid  = cred.user.uid;
+  await setDoc(doc(db,"users",uid), { uid, email, role, createdAt: new Date(), ...extra });
+  if (role === "prof")
+    await setDoc(doc(db,"professors",uid), {
+      uid, name: extra.name||"", subjects:[], levels:[],
+      wilaya: extra.wilaya||"", price:0, bio:"", rating:0, reviews:0, available:true
+    });
+  return cred.user;
+}
+
+export async function login(email, password) {
+  const cred = await signInWithEmailAndPassword(auth, email, password);
+  const snap = await getDoc(doc(db,"users",cred.user.uid));
+  const data = snap.data();
+  location.href = data.role === "prof" ? "dashboard-prof.html" : "dashboard-eleve.html";
+}
+
+export async function logout() {
+  await signOut(auth);
+  location.href = "index.html";
+}
+
+export function watchAuth(cb) {
+  onAuthStateChanged(auth, async user => {
+    if (user) {
+      const snap = await getDoc(doc(db,"users",user.uid));
+      cb(user, snap.data());
+    } else { cb(null, null); }
+  });
+}`
+  }
+];
+
+// ===== بناء الواجهة =====
+const grid = document.getElementById('grid');
+files.forEach((f, i) => {
+  grid.innerHTML += `
+    <div class="card">
+      <div class="icon">${f.icon}</div>
+      <h3>${f.name}</h3>
+      <p>${f.desc}</p>
+      <button class="dl-btn" id="btn${i}" onclick="dl(${i})">⬇️ تنزيل</button>
+    </div>`;
+});
+
+function dl(i) {
+  const f    = files[i];
+  const blob = new Blob([f.content], { type: 'text/plain;charset=utf-8' });
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = f.name.includes('/') ? f.name.split('/').pop() : f.name;
+  a.click();
+  const btn = document.getElementById('btn' + i);
+  btn.textContent = '✅ تم التنزيل';
+  btn.classList.add('done');
+}
+
+function downloadAll() {
+  files.forEach((_, i) => {
+    setTimeout(() => dl(i), i * 600);
+  });
+}
+</script>
+</body>
+</html>

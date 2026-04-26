@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>بحث | دروس+</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav><div class="logo">📚 دروس+</div>
+<div class="nav-links"><a href="index.html">الرئيسية</a></div></nav>
+<div class="search-page">
+  <div class="filters">
+    <select id="fSubject">
+      <option value="">كل المواد</option>
+      <option>رياضيات</option><option>فيزياء</option>
+      <option>كيمياء</option><option>إنجليزية</option><option>عربية</option>
+    </select>
+    <select id="fWilaya">
+      <option value="">كل الولايات</option>
+      <option>الجزائر</option><option>وهران</option><option>قسنطينة</option>
+    </select>
+    <input type="number" id="fPrice" placeholder="أقصى سعر (دج)">
+    <button onclick="doSearch()">بحث</button>
+  </div>
+  <div class="cards" id="results"></div>
+</div>
+<script type="module">
+  import { searchProfessors, renderCards } from './js/search.js';
+  window.doSearch = async () => {
+    const profs = await searchProfessors({
+      subject:  document.getElementById('fSubject').value || null,
+      wilaya:   document.getElementById('fWilaya').value  || null,
+      maxPrice: document.getElementById('fPrice').value   || null
+    });
+    renderCards(profs, 'results');
+  };
+  doSearch();
+</script>
+</body>
+</html>
